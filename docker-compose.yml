@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  leika-api:
+    build: .
+    container_name: leika-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - JWT_SECRET=${JWT_SECRET:-leika_change_me}
+      - JWT_EXPIRES=7d
+    volumes:
+      - ./db:/app/db
+      - ./public:/app/public
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
