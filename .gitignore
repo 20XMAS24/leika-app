@@ -1,0 +1,4 @@
+node_modules/
+db/leika.db
+.env
+*.log
