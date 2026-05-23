@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лейка — Умный Полив</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0a84ff22, #34c75922);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, sans-serif;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 28px;
+      padding: 40px 36px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,.12);
+      text-align: center;
+    }
+    .logo {
+      width: 72px; height: 72px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #0a84ff, #42c1f7 50%, #34c759);
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      font-size: 36px;
+    }
+    h1 { font-size: 28px; font-weight: 900; letter-spacing: -0.03em; color: #0f172a; }
+    .sub { color: #64748b; margin: 8px 0 28px; font-size: 15px; line-height: 1.5; }
+    .step {
+      background: #f3f5f9;
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      text-align: left;
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.5;
+    }
+    .step strong { display: block; color: #0f172a; font-size: 15px; margin-bottom: 4px; }
+    code {
+      background: #e2e8f0;
+      border-radius: 6px;
+      padding: 2px 7px;
+      font-size: 13px;
+      font-family: 'SF Mono', Menlo, monospace;
+      color: #0a84ff;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #0a84ff, #34c759);
+      color: white;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .endpoints {
+      margin-top: 24px;
+      text-align: left;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .ep { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+    .ep:last-child { border-bottom: none; }
+    .method { font-weight: 800; font-size: 11px; padding: 3px 7px; border-radius: 6px; min-width: 46px; text-align: center; }
+    .post { background: #dcfce7; color: #16a34a; }
+    .get  { background: #dbeafe; color: #1d4ed8; }
+    .ep-path { font-family: 'SF Mono', Menlo, monospace; color: #334155; flex: 1; }
+    .ep-desc { color: #94a3b8; font-size: 12px; }
+    a { color: #0a84ff; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">🌿</div>
+    <span class="badge">Backend API v1.0 · Node.js + SQLite</span>
+    <h1>Лейка Backend</h1>
+    <p class="sub">REST API для системы умного полива «Лейка»<br>и программно-аппаратного комплекса HPFS</p>
+
+    <div class="step">
+      <strong>1. Установка и запуск</strong>
+      <code>npm install</code> затем <code>npm start</code><br>
+      Сервер: <code>http://localhost:3000</code>
+    </div>
+
+    <div class="step">
+      <strong>2. Подключить frontend</strong>
+      Положи <code>leika-ios-pro-app-5.html</code> в <code>public/index.html</code><br>
+      Добавь перед <code>&lt;/body&gt;</code>:<br><br>
+      <code>&lt;script src="/leika-api.js"&gt;&lt;/script&gt;</code><br>
+      <code>&lt;script src="/leika-patch.js"&gt;&lt;/script&gt;</code>
+    </div>
+
+    <div class="step">
+      <strong>3. Health check</strong>
+      <a href="/api/health"><code>GET /api/health</code></a>
+    </div>
+
+    <div class="endpoints">
+      <div class="ep"><span class="method post">POST</span><span class="ep-path">/api/auth/register</span><span class="ep-desc">Регистрация</span></div>
+      <div class="ep"><span class="method post">POST</span><span class="ep-path">/api/auth/login</span><span class="ep-desc">Вход / JWT</span></div>
+      <div class="ep"><span class="method get">GET</span><span class="ep-path">/api/auth/me</span><span class="ep-desc">Профиль 🔒</span></div>
+      <div class="ep"><span class="method get">GET</span><span class="ep-path">/api/devices</span><span class="ep-desc">Устройства HPFS 🔒</span></div>
+      <div class="ep"><span class="method get">GET</span><span class="ep-path">/api/zones?device_id=X</span><span class="ep-desc">Зоны 🔒</span></div>
+      <div class="ep"><span class="method post">POST</span><span class="ep-path">/api/telemetry</span><span class="ep-desc">Телеметрия 🔒</span></div>
+      <div class="ep"><span class="method get">GET</span><span class="ep-path">/api/telemetry/stats</span><span class="ep-desc">Статистика 24ч 🔒</span></div>
+      <div class="ep"><span class="method post">POST</span><span class="ep-path">/api/watering/start</span><span class="ep-desc">Запуск 🔒</span></div>
+      <div class="ep"><span class="method post">POST</span><span class="ep-path">/api/watering/stop</span><span class="ep-desc">Стоп 🔒</span></div>
+      <div class="ep"><span class="method get">GET</span><span class="ep-path">/api/watering/dashboard</span><span class="ep-desc">Дашборд 🔒</span></div>
+    </div>
+  </div>
+</body>
+</html>
